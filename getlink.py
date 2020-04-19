@@ -37,22 +37,11 @@ def fetch_links():
 		print(url)
 	return soups
 
-# soup = BeautifulSoup(open("output1.html"), "html.parser")
-# soup=get_page_html(url)
-# data={}
-# data["full_url"]=[]
-# with open("link_v5.txt", "w") as file:
-# 	all_links=soup.find_all("a", class_="CoveoResultLink")
-# 	for i in range(len(all_links)):
-# 		# data['title'].append(all_links[i].text)
-# 		# data['links'].append(all_links[i].get('href'))
-# 		data["full_url"].append("https://snowflakecommunity.force.com"+all_links[i].get("href")+"/"+space_to_dash(all_links[i].text))
-# 	file.write(str(data))
 
 soup=get_page_html(url)
 data={}
 data["full_url"]=[]
-with open("sample.json", "w") as outfile:
+with open("links_v1.json", "w") as outfile:
 	all_links=soup.find_all("a", class_="CoveoResultLink")
 	for i in range(len(all_links)):
 		# data['title'].append(all_links[i].text)

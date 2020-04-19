@@ -10,27 +10,19 @@ import json
 import pandas as pd
 
 
-f = open ('link_v4.txt', "r") 
-  
-# Reading from file 
-data = json.loads(f.read()) 
-  
-# Iterating through the json 
-# list 
-for i in data['full_url']: 
-    print(i) 
-  
-# Closing file 
-f.close()
-
 a='https://snowflakecommunity.force.com/s/question/0D50Z00006uSiSdSAK/user-defined-function-udf-to-return-a-value'
 b='https://snowflakecommunity.force.com/s/question/0D50Z000081KgLqSAK/how-do-privileges-impact-the-results-of-querying-views-in-informationschema'
 c='https://snowflakecommunity.force.com/s/question/0D50Z00008MpXgpSAF/does-snowflake-support-pass-through-authentication-from-3rd-party-tool'
 
 
+# urls=[a,b,c]
+f = open ('sample.json', "r") 
+  
+# Reading from file 
+data = json.loads(f.read()) 
+  
 
-
-
+urls=data['full_url'] 
 
 def get_page_html(url):
 
@@ -50,32 +42,33 @@ def get_page_html(url):
 
 def fetch_questions_overview_links():
 	data={}
-	data['urls']=[]
-	data['date']=[]
-	data['question_author']=[]
-	data['question_title']=[]
-	data['question_body']=[]
-	data['answer_count']=[]
-	data['question_views']=[]
-	data['answer_block']=[]
-	data['best_answer']=[]
-	with open("data_v4.txt", "w") as file:
+	data["urls"]=[]
+	data["date"]=[]
+	data["question_author"]=[]
+	data["question_title"]=[]
+	data["question_body"]=[]
+	data["answer_count"]=[]
+	data["question_views"]=[]
+	data["answer_block"]=[]
+	data["best_answer"]=[]
+	with open("data_v1.json", "w") as outfile:
 		for url in urls:
 			soup = get_page_html(url)
-			data['urls'].append(url)
-			data['date'].append(soup.find('div', class_='cuf-subPreamble slds-text-body--small').text)
-			data['question_author'].append(soup.find('div', class_='cuf-preamble slds-grid slds-grid--align-spread slds-has-flexi-truncate').text)
-			data['question_title'].append(soup.find('div', class_='cuf-body cuf-questionTitle forceChatterFeedBodyQuestionWithoutAnswer').text)
-			data['question_body'].append(soup.find('div', class_='cuf-body cuf-questionBody forceChatterFeedBodyQuestionWithoutAnswer').text)
-			data['answer_count'].append(soup.find('li', class_='slds-item qe-commentCount').text)
-			data['question_views'].append(soup.find('li', class_='slds-item cuf-viewCount qe-viewCount').text)
+			data["urls"].append(url)
+			data["date"].append(soup.find('div', class_='cuf-subPreamble slds-text-body--small').text)
+			data["question_author"].append(soup.find('div', class_='cuf-preamble slds-grid slds-grid--align-spread slds-has-flexi-truncate').text)
+			data["question_title"].append(soup.find('div', class_='cuf-body cuf-questionTitle forceChatterFeedBodyQuestionWithoutAnswer').text)
+			data["question_body"].append(soup.find('div', class_='cuf-body cuf-questionBody forceChatterFeedBodyQuestionWithoutAnswer').text)
+			data["question_views"].append(soup.find('li', class_='slds-item cuf-viewCount qe-viewCount').text)
 			answers=soup.find_all('article', class_='forceChatterComment')
 			a_bodies=[]
 			for i in range(1,len(answers)):
 				a_bodies.append(answers[i].text) 
-			data['answer_block'].append(a_bodies)
-			data['best_answer'].append(answers[0].text)
-		file.write(str(data))
+			data["answer_block"].append(a_bodies)
+			data["best_answer"].append(answers[0].text)
+
+		json_object = json.dumps(data, indent = 9) 
+		outfile.write(json_object)
 
 
 def fetch_links():
@@ -143,7 +136,7 @@ def txt_to_csv():
 	return df.to_csv('link_v4.csv', index=False)
 
 # txt_to_csv()
-# fetch_questions_overview_links()
+fetch_questions_overview_links()
 # scrape_data()
 # test_soup()
 
