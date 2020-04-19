@@ -7,14 +7,28 @@ from csv import writer
 from selenium import webdriver
 import time
 import json
+import pandas as pd
 
 
-# driver = webdriver.Chrome()
+f = open ('link_v4.txt', "r") 
+  
+# Reading from file 
+data = json.loads(f.read()) 
+  
+# Iterating through the json 
+# list 
+for i in data['full_url']: 
+    print(i) 
+  
+# Closing file 
+f.close()
 
 a='https://snowflakecommunity.force.com/s/question/0D50Z00006uSiSdSAK/user-defined-function-udf-to-return-a-value'
 b='https://snowflakecommunity.force.com/s/question/0D50Z000081KgLqSAK/how-do-privileges-impact-the-results-of-querying-views-in-informationschema'
 c='https://snowflakecommunity.force.com/s/question/0D50Z00008MpXgpSAF/does-snowflake-support-pass-through-authentication-from-3rd-party-tool'
-urls=[a,b,c]
+
+
+
 
 
 
@@ -120,10 +134,16 @@ def scrape_data():
 def test_soup():
 	soups = BS(open("output1.html"), "html.parser")
 	for i in soups:
-		print(i)		
+		print(i)
 
+def txt_to_csv():
+	# scrape_json()
+	data=pd.read_csv('link_v4.txt')
+	df=pd.DataFrame('link_v4.txt', columns=data.keys())
+	return df.to_csv('link_v4.csv', index=False)
 
-fetch_questions_overview_links()
+# txt_to_csv()
+# fetch_questions_overview_links()
 # scrape_data()
 # test_soup()
 
