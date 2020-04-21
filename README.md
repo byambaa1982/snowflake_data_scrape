@@ -15,7 +15,7 @@ I am asked to scrape and extract data [this website](https://snowflakecommunity.
 
 ### Data that we need to scape
 
-index|Urls|Address|Date| Author of question| Question Title| Question body| count | views |answer| Best Anser 
+index|Urls|Date   | Author of question| Question Title| Question body| count | views |answer| Best Anser 
 -----| ---| ------| ---|-------------------|---------------|--------------|-------|-------|------|-----------
 0   | www.url1.com| date1| name 1          | title 1       | question body | 123  | 2345  | ans1 | best anwer
 1   | www.url2.com| date2| name 2          | title 2       | question body | 123  | 2345  | ans2 | best anwer 
