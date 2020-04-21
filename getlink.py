@@ -52,7 +52,8 @@ with open("the_links.json", "w") as outfile:
 	print("Total scraped links are {}".format(len(data["full_url"])))
 	# Serializing json  
 	json_object = json.dumps(data, indent = 1) 
-	outfile.write(json_object )
+	
+outfile.write(json_object )
 
 
 
